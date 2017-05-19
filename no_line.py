@@ -97,8 +97,8 @@ for y in range(img.size[1]):
         pixdata[x, y] = (255, 255, 255, 255)
 
 result = []
-for x in range(img.size[0]):
-    for y in range(img.size[1]):
+for y in range(img.size[1]):
+    for x in range(img.size[0]):
         if x == 0 and y == 0:
             for i in range(0, 70):
                 points = get_line((x, y), (199, i))
@@ -204,7 +204,13 @@ for x in range(img.size[0]):
                 points = get_line((x, y), (0, l))
                 result.append(detector(pixdata, points))
 
-        print(result, end='')
-    print('\n')
+        count = 0
+        result = list(set(result))
+        for rgb in result:
+            if rgb:
+                count += 1
+
+        print((x, y), ": ", count)
+        result = []
 
 img.save("1_unline.gif", "GIF")
